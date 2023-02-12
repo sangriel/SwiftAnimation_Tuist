@@ -4,12 +4,12 @@
 프로젝트 도입기는 https://sm-ios-story.tistory.com/36에 써 있습니다. 
 
 
-## 프로젝트 구조 
+프로젝트 구조 
 =======
 ![Alt text](https://user-images.githubusercontent.com/39114237/218329029-8f19ad21-baa7-4865-a879-d23f88ecf852.png)
 
 
-##Loadings
+Loadings
 =======
 |SpinningLoading|SpiralLoading|
 |---|---|
@@ -18,7 +18,7 @@
 CALayers와 CAAnimations를 이용하여 만들어 봤습니다.
 
 
-##CardTransition
+CardTransition
 =======
 <img src="https://user-images.githubusercontent.com/39114237/216034848-4febc1e7-730f-48b7-a957-177fc484517d.gif" width="200" height="400"/>
 
@@ -27,7 +27,7 @@ UIViewControllerAnimatedTransitioning와 UIViewControllerTransitioningDelegate�
 
 
 
-##OverLappingCollectionView
+OverLappingCollectionView
 =======
 <img src="https://user-images.githubusercontent.com/39114237/216813529-edb2b57e-437b-474f-8f33-15fa9296235b.gif" width="200" height="400"/>
 
