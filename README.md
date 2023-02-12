@@ -8,7 +8,7 @@
 ![Alt text](https://user-images.githubusercontent.com/39114237/218329029-8f19ad21-baa7-4865-a879-d23f88ecf852.png)
 =======
 
-#Loadings
+##Loadings
 |SpinningLoading|SpiralLoading|
 |---|---|
 |<img src="https://user-images.githubusercontent.com/39114237/216038550-0430140f-a648-478d-98a6-f5e635bd203d.gif" width="200" height="400"/>|<img src="https://user-images.githubusercontent.com/39114237/216038311-4b7ed79c-cefa-4b7a-aead-e99e53e1fae7.gif" width="200" height="400"/>|
@@ -16,7 +16,7 @@
 CALayers와 CAAnimations를 이용하여 만들어 봤습니다.
 =======
 
-#CardTransition
+##CardTransition
 <img src="https://user-images.githubusercontent.com/39114237/216034848-4febc1e7-730f-48b7-a957-177fc484517d.gif" width="200" height="400"/>
 
 앱스토어 clone 앱입니다. 
@@ -24,7 +24,7 @@ UIViewControllerAnimatedTransitioning와 UIViewControllerTransitioningDelegate�
 =======
 
 
-#OverLappingCollectionView
+##OverLappingCollectionView
 <img src="https://user-images.githubusercontent.com/39114237/216813529-edb2b57e-437b-474f-8f33-15fa9296235b.gif" width="200" height="400"/>
 
 29CM 앱 메인 화면에 있는 배너 클론앱입니다.
