@@ -1,6 +1,6 @@
 # SwiftAnimation_Tuist
 
-기존 SwiftAnimation에 Tuist를 도입한 프로젝트 입니다. 
+기존 SwiftAnimation에 Tuist를 도입한 프로젝트 입니다.\n
 프로젝트 도입기는 https://sm-ios-story.tistory.com/36에 써 있습니다. 
 
 
@@ -22,7 +22,7 @@ CALayers와 CAAnimations를 이용하여 만들어 봤습니다.
 =======
 <img src="https://user-images.githubusercontent.com/39114237/216034848-4febc1e7-730f-48b7-a957-177fc484517d.gif" width="200" height="400"/>
 
-앱스토어 clone 앱입니다. 
+앱스토어 clone 앱입니다.\n
 UIViewControllerAnimatedTransitioning와 UIViewControllerTransitioningDelegate를 이용하여 만들었습니다.
 
 
@@ -31,6 +31,6 @@ UIViewControllerAnimatedTransitioning와 UIViewControllerTransitioningDelegate�
 =======
 <img src="https://user-images.githubusercontent.com/39114237/216813529-edb2b57e-437b-474f-8f33-15fa9296235b.gif" width="200" height="400"/>
 
-29CM 앱 메인 화면에 있는 배너 클론앱입니다.
-화면중앙에 나오는 셀의 이미지를 CollectionViewBackgroundView로 옮기고 해당 셀의 UIImageView는 isHidden=true로 하는 형태로 구현하였습니다.
+29CM 앱 메인 화면에 있는 배너 클론앱입니다.\n
+화면중앙에 나오는 셀의 이미지를 CollectionViewBackgroundView로 옮기고 해당 셀의 UIImageView는 isHidden=true로 하는 형태로 구현하였습니다.\n
 CGAffineTransform을 활용하여 라벨 애니메이션 효과를 주었습니다.
