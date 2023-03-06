@@ -34,3 +34,13 @@ OverLappingCollectionView
 29CM 앱 메인 화면에 있는 배너 클론앱입니다.  
 화면중앙에 나오는 셀의 이미지를 CollectionViewBackgroundView로 옮기고 해당 셀의 UIImageView는 isHidden=true로 하는 형태로 구현하였습니다.  
 CGAffineTransform을 활용하여 라벨 애니메이션 효과를 주었습니다.
+
+
+
+FluidSwipeBackView
+=======
+<img src="https://user-images.githubusercontent.com/39114237/223111348-208513a7-bce3-4adb-a532-281dddb8d627.gif" width="200" height="400"/>
+
+PanGesture와 UIBezierPath 사용하여 애니메이션효과를 주었으며, UINavigationControllerDelegate와 UIAnimationTransitionDelegate   
+등을 사용하여 Custom Transition Animation을 만들어 보았습니다.   
+
