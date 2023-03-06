@@ -1,63 +1,80 @@
 //
-//  PanTestViewController.swift
+//  FluidSwipeBackGestureView.swift
 //  FluidSwipeBack
 //
-//  Created by sangmin han on 2023/03/03.
+//  Created by sangmin han on 2023/03/06.
 //  Copyright © 2023 HSMProducts. All rights reserved.
 //
 
 import Foundation
 import UIKit
-import CommonUI
 
+class FluidSwipeBackGesture : NSObject {
+    
+    private let imageView = UIImageView()
+    
+    private let panGesture = UIPanGestureRecognizer()
+    
+    private let shapeLayer = CAShapeLayer()
+    private let initialPath = UIBezierPath()
+    private let completePath = UIBezierPath()
+    private let animatePath = UIBezierPath()
+    
+    private var topPoint : CGPoint = .zero
+    private var bottomPoint : CGPoint = CGPoint(x: 0, y: UIScreen.main.bounds.height)
 
-
-class PanGestureTestViewController : UIViewController {
+    private var curveStartPoint : CGPoint = .zero
+    private var curveControlPoint : CGPoint = .zero
+    private var curveEndPoint : CGPoint = .zero
     
-    let backView = UIImageView()
+    private var oldPanY : CGFloat = 0
+    private var oldPanX : CGFloat = 0
     
-    let panGesture = UIPanGestureRecognizer()
+    private(set) var isInteractive : Bool = false
     
-    let shapeLayer = CAShapeLayer()
-    let initialPath = UIBezierPath()
-    let completePath = UIBezierPath()
-    let animatePath = UIBezierPath()
+    private var superView : UIViewController!
     
-    var topPoint : CGPoint = .zero
-    var bottomPoint : CGPoint = CGPoint(x: 0, y: UIScreen.main.bounds.height)
-
-    var curveStartPoint : CGPoint = .zero
-    var curveControlPoint : CGPoint = .zero
-    var curveEndPoint : CGPoint = .zero
+    private var transitionContext : UIViewControllerContextTransitioning?
     
-    var oldPanY : CGFloat = 0
-    var oldPanX : CGFloat = 0
+    enum AnimationType {
+        case backToInitial
+        case forwardingToComplete
+        case none
+    }
+    
+    private var currentAnimationStatus : AnimationType = .none
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = .white
-        makebackView()
-        
+    
+    
+    init(superView : UIViewController, backgroundImage : UIImage){
+        super.init()
+        self.imageView.image = backgroundImage
+        self.superView = superView
         let panGesture = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         panGesture.edges = .left
-        view.addGestureRecognizer(panGesture)
-        
+        self.superView.view.addGestureRecognizer(panGesture)
         
         setShapeLayer()
         setAnimatePath()
+        makeImageView()
+    }
+    
+    required init?(coder : NSCoder){
+        fatalError("molang")
     }
     
     func setShapeLayer(){
-        shapeLayer.lineWidth = 1
-        backView.layer.mask = shapeLayer
+        imageView.layer.mask = shapeLayer
     }
     
-    
-    
+    func setTransitionContext(transitionContent : UIViewControllerContextTransitioning){
+        self.transitionContext = transitionContent
+    }
     
     @objc func handlePanGesture(_ gesture: UIScreenEdgePanGestureRecognizer) {
-        let point = gesture.location(in: view)
+        let point = gesture.location(in: self.superView.view)
+        
         
         switch gesture.state {
         case.began:
@@ -66,6 +83,9 @@ class PanGestureTestViewController : UIViewController {
             curveControlPoint.y = point.y
             oldPanY = point.y
             oldPanX = point.x
+            currentAnimationStatus = .none
+            isInteractive = true
+            superView.navigationController?.popViewController(animated: true)
         case .changed:
             let xpos = min(point.x,50)
             topPoint.x = xpos
@@ -83,32 +103,36 @@ class PanGestureTestViewController : UIViewController {
 
             setAnimatePath()
         case .ended:
-            if point.x >= (UIScreen.main.bounds.width * 2) / 3 || gesture.velocity(in: self.view).x > 500 {
+            if point.x >= (UIScreen.main.bounds.width * 2) / 3 || gesture.velocity(in: self.superView.view).x > 500 {
                 animateForwadingToComplete()
             }
             else {
                 animateBackToInitial()
             }
+            isInteractive = false
         default:
             break
         }
     }
+    
+    
+    
 }
-extension PanGestureTestViewController {
-    private func makebackView(){
-        self.view.addSubview(backView)
-        backView.translatesAutoresizingMaskIntoConstraints = false
-        backView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        backView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        backView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        backView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        backView.backgroundColor = .yellow
-        backView.image = CommonUIAsset.backgroundImage1.image
+extension FluidSwipeBackGesture {
+    private func makeImageView(){
+        self.superView.view.addSubview(imageView)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.topAnchor.constraint(equalTo: self.superView.view.topAnchor).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: self.superView.view.leadingAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: self.superView.view.trailingAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: self.superView.view.bottomAnchor).isActive = true
+        imageView.isUserInteractionEnabled = false
+        
     }
     
 }
 //MARK: - PathMaker
-extension PanGestureTestViewController {
+extension FluidSwipeBackGesture {
     private func setInitialPath(){
         initialPath.removeAllPoints()
         initialPath.move(to: .init(x: 0, y: 0))
@@ -166,11 +190,12 @@ extension PanGestureTestViewController {
     }
 }
 //MARK: -Animations
-extension PanGestureTestViewController {
+extension FluidSwipeBackGesture : CAAnimationDelegate {
     private func animateBackToInitial(){
         setInitialPath()
-        
+        currentAnimationStatus = .backToInitial
         let myAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.path))
+        myAnimation.delegate = self
         myAnimation.duration = 0.4
         myAnimation.fromValue = animatePath.cgPath
         myAnimation.toValue = initialPath.cgPath
@@ -192,8 +217,9 @@ extension PanGestureTestViewController {
     
     private func animateForwadingToComplete(){
         setCompletePath()
-        
+        currentAnimationStatus = .forwardingToComplete
         let myAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.path))
+        myAnimation.delegate = self
         myAnimation.duration = 0.4
         myAnimation.fromValue = animatePath.cgPath
         myAnimation.toValue = completePath.cgPath
@@ -215,4 +241,22 @@ extension PanGestureTestViewController {
         setAnimatePath()
     }
     
+    
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        guard let transitionContext = transitionContext else {
+            return
+        }
+        
+        if currentAnimationStatus == .forwardingToComplete {
+            transitionContext.finishInteractiveTransition()
+            transitionContext.completeTransition(true)
+        }
+        else if currentAnimationStatus == .backToInitial {
+            transitionContext.cancelInteractiveTransition()
+            transitionContext.completeTransition(false)
+            
+        }
+       
+        self.transitionContext = nil
+    }
 }

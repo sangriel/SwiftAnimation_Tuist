@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: UIScreen.main.bounds)
 //
-        window?.rootViewController = UINavigationController(rootViewController: FluidSwipeBackResolver.getPanTestViewController())
+        window?.rootViewController = UINavigationController(rootViewController: FluidSwipeBackResolver.getFluidSwipeBackViewController())
         window?.makeKeyAndVisible()
         window?.windowScene = scene
         

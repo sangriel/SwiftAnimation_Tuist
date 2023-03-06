@@ -85,7 +85,6 @@ extension MainCardListViewController : UITableViewDelegate, UITableViewDataSourc
         detailView.transitioningDelegate = transitionManager
         self.present(detailView, animated: true,completion: nil)
         
-        //이거 왜 있는 거냐?
         CFRunLoopWakeUp(CFRunLoopGetCurrent())
     }
     

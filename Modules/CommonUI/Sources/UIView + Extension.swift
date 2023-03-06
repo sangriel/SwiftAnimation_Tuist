@@ -3,7 +3,7 @@ import UIKit
 
 public extension UIView {
 
-    public func createSnapshot(withFrame : CGRect?,size : CGSize?) -> UIImage? {
+    func createSnapshot(withFrame : CGRect?,size : CGSize?,afterScreenUpdate : Bool = true) -> UIImage? {
         if let size = size {
             UIGraphicsBeginImageContextWithOptions(size, false, 0)
         }
@@ -11,11 +11,10 @@ public extension UIView {
             UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
         }
         if let selectedFrame = withFrame {
-            drawHierarchy(in: selectedFrame, afterScreenUpdates: true)
+            drawHierarchy(in: selectedFrame, afterScreenUpdates: afterScreenUpdate)
         }
         else {
-            
-            drawHierarchy(in: frame, afterScreenUpdates: true)
+            drawHierarchy(in: frame, afterScreenUpdates: afterScreenUpdate)
         }
         
         let image = UIGraphicsGetImageFromCurrentImageContext()

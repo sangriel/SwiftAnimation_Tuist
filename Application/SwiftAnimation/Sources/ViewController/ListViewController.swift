@@ -12,11 +12,11 @@ import CardTransition
 import OverLappingCollectionView
 import SpinningLoading
 import SpiralLoading
-
+import FluidSwipeBack
 
 class ListViewController : UIViewController {
     
-    let data : [String] = ["SpinningloadingAnimation","SpiralLoadingAnimation","CardTransitionAnimation","OverLappingCollectionView"]
+    let data : [String] = ["SpinningloadingAnimation","SpiralLoadingAnimation","CardTransitionAnimation","OverLappingCollectionView","FluidSwipeBack"]
     
     lazy var tableView : UITableView = {
         let tb = UITableView(frame: .zero, style: .plain)
@@ -76,9 +76,9 @@ extension ListViewController : UITableViewDelegate, UITableViewDataSource {
         else if indexPath.row == 3 {
             self.navigationController?.pushViewController(OverLappingCollectionViewResolver.getOverLappingCollectionView(), animated: true)
         }
+        else if indexPath.row == 4 {
+            self.navigationController?.pushViewController(FluidSwipeBackResolver.getFluidSwipeBackViewController(), animated: true)
+        }
     }
-    
-    
-    
     
 }
