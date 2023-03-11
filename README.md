@@ -4,8 +4,9 @@
 기존 SwiftAnimation에 Tuist를 도입한 프로젝트 입니다.  
 프로젝트 도입기는 https://sm-ios-story.tistory.com/36 에 써 있습니다. 
 
-Jenkins를 통한CI 적용기도 추가되었습니다.
-Jenkins 도입기는 https://sm-ios-story.tistory.com/47에 기술되어 있습니다.
+Jenkins를 통한CI 적용기도 추가되었습니다.   
+Jenkins 도입기는 https://sm-ios-story.tistory.com/47에 기술되어 있습니다.   
+jenkins web hook이 되나?
 
 프로젝트 구조 
 =======
